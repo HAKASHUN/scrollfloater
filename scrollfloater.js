@@ -6,4 +6,4 @@
  * @author HAKASHUN
  */
 
-//hoge
+//hoge hoge
