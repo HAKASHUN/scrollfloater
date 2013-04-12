@@ -73,6 +73,7 @@
     var elOffset = element.offset();
     var elTop = elOffset.top;
     var elLeft = elOffset.left;
+    var elHeight = element.height();
 
     /** @type {String} ['relative' || 'fixed'] */
     var mode = 'relative';
@@ -89,6 +90,8 @@
         $(document.body).append(element);
         //set position fixed style
         methods.setFixedStyle(element, true, options.top, elLeft);
+        //set parentElement margin-top
+        defaultParentEl.css({'paddingTop': elHeight + elTop});
         options.handleAddFixed(element);
       } else if (scrollTop <= (elTop - options.top) && mode != 'relative'){
         //fixed => relative
@@ -101,6 +104,7 @@
         }
         //remove position fixed style
         methods.setFixedStyle(element, false, options.top, elLeft);
+        defaultParentEl.css({'paddingTop': ''});
         options.handleRemoveFixed(element);
       } else {
         //fixed => fixed OR relative => relative
