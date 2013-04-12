@@ -7,6 +7,8 @@
  */
 (function($) {
 
+  var counter = 0;
+
   var methods = {
     //Get element height.
     getElHeight : function(element) {
@@ -39,6 +41,10 @@
   };
 
   $.fn.scrollFloater = function() {
+    if(counter){
+      throw new Error('can not be used in two or more elements.');
+    }
+    counter++;
     var element = this;
     //Check Element
     if(!element.length){
