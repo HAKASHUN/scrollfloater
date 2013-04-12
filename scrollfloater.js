@@ -27,10 +27,10 @@
       }
     },
     //SetFixedStyle
-    setFixedStyle: function(element, val, opt_left) {
+    setFixedStyle: function(element, val, opt_top, opt_left) {
       var param;
       if(val) {
-        param = {'position': 'fixed', 'top': 0, 'left' : opt_left,'margin-top': 0};
+        param = {'position': 'fixed', 'top': opt_top, 'left' : opt_left,'margin-top': 0};
         element.addClass('fixed');
       } else {
         param = {'position': 'relative', 'top': '', 'left': '', 'margin-top': ''};
@@ -40,7 +40,17 @@
     }
   };
 
-  $.fn.scrollFloater = function() {
+  $.fn.scrollFloater = function(userOptions) {
+
+    // Default options
+    var options = {
+      top: 0,
+      handleAddFixed: function(){},
+      handleRemoveFixed: function(){}
+    };
+
+    $.extend(options, userOptions);
+
     if(counter){
       throw new Error('can not be used in two or more elements.');
     }
@@ -72,14 +82,15 @@
       // Current Scroll Position
       var scrollTop = $(this).scrollTop();
 
-      if(scrollTop > elTop && mode != 'fixed'){
+      if(scrollTop > (elTop - options.top) && mode != 'fixed'){
         //relative => fixed
         mode = 'fixed';
         //append element to document.body
         $(document.body).append(element);
         //set position fixed style
-        methods.setFixedStyle(element, true, elLeft);
-      } else if (scrollTop <= elTop && mode != 'relative'){
+        methods.setFixedStyle(element, true, options.top, elLeft);
+        options.handleAddFixed(element);
+      } else if (scrollTop <= (elTop - options.top) && mode != 'relative'){
         //fixed => relative
         mode = 'relative';
         //append element to defaultParentEl
@@ -89,7 +100,8 @@
           defaultParentEl.append(element);
         }
         //remove position fixed style
-        methods.setFixedStyle(element, false, elLeft);
+        methods.setFixedStyle(element, false, options.top, elLeft);
+        options.handleRemoveFixed(element);
       } else {
         //fixed => fixed OR relative => relative
         return;
