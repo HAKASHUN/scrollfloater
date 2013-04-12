@@ -1,7 +1,7 @@
 # ScrollFloater jQuery Plugin
 
 ## Demo
-Coming Soon!
+[Demo](http://hakashun.github.io/scrollfloater/scrollfloater.html)
 
 ## Features
 * You can be fixed to one element in the page.
