@@ -50,10 +50,15 @@
             <div id="menu"></div>
         </div>
     </div>
-<script src="scrollfloater.min.js"></script>
+<script src="scrollfloater.js"></script>
+<!--<script src="scrollfloater.min.js"></script>-->
 <script>
     $(document).ready(function(){
-        $('#header').scrollFloater();
+        $('#header').scrollFloater({
+            top: 20,
+            handleAddFixed: function(el){ console.log('fixed', el) },
+            handleRemoveFixed: function(el) { console.log('unfixed', el) }
+        });
     });
 </script>
 </body>

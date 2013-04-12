@@ -12,7 +12,15 @@
 
 ## Example
 ```
+// Basic
 $('#hoge').scrollFloater();
+
+// Advanced
+$('#hoge').scrollFloater({
+    top: 20, // the distance from page top.
+    handleAddFixed: function(el) { //after fixed },
+    handleRemoveFixed: function(el) { //after unfixed }
+});
 ```
 
 ## Licence
